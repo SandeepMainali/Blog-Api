@@ -1,5 +1,6 @@
 package org.example.blog.Controllers;
 
+import jakarta.validation.Valid;
 import org.example.blog.Services.UserService;
 import org.example.blog.payloads.ApiResponse;
 import org.example.blog.payloads.UserDto;
@@ -16,13 +17,13 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping("/")
-    public ResponseEntity<UserDto> CreateUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> CreateUser(@Valid @RequestBody UserDto userDto){
         UserDto CreatedUserDto=this.userService.createUser(userDto);
         return new ResponseEntity<>(CreatedUserDto, HttpStatus.CREATED);
 
     }
 @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> UpdateUser(@RequestBody UserDto userDto,@PathVariable("userId")Integer uid){
+    public ResponseEntity<UserDto> UpdateUser(@Valid @RequestBody UserDto userDto,@PathVariable("userId")Integer uid){
 
          UserDto updatedUser=this.userService.updateUser(userDto,uid);
          return ResponseEntity.ok(updatedUser);
@@ -37,6 +38,7 @@ public ResponseEntity<ApiResponse> DeleteUser(@PathVariable("userId")Integer uid
 
 @GetMapping("/")
     public ResponseEntity<List<UserDto>> getAllUsers(){
+
         return ResponseEntity.ok(this.userService.getAllUsers());
 }
 
