@@ -15,7 +15,7 @@ import java.util.Date;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer PostId;
+    private Integer postId;
 
     private String tittle;
     @Column(length = 1000)

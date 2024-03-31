@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -71,8 +72,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDir)
+    {
+        Sort sort = null;
+        if(sortDir.equalsIgnoreCase("asc")){
+            sort=Sort.by(sortBy).ascending();
+        }else {
+            sort=Sort.by(sortBy).descending();
+        }
+
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
         Page<Post> postPage = this.postRepo.findAll(pageable);
         List<Post> allPosts = postPage.getContent();
 
@@ -115,10 +126,11 @@ public class PostServiceImpl implements PostService {
 
     }
 
-//    @Override
-//    public List<Post> searchPost(String keyword) {
-//        // Implement logic to search posts by keyword
-//        // You might have to define a method in the PostRepo interface to search posts by keyword
-//        return postRepo.findByTitleContainingOrContentContaining(keyword, keyword);
-//    }
+    @Override
+    public List<PostDto> searchPost(String keyword) {
+        List<Post> posts=this.postRepo.findByTittleContaining(keyword);
+        List<PostDto> postDtos=posts.stream().map((post) ->this.modelMapper.map(post,PostDto.class )).collect(Collectors.toList());
+        return postDtos;
+
+    }
 }

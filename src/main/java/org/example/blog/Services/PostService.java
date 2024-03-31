@@ -14,12 +14,12 @@ public interface PostService {
 
 
     PostDto getPostById(Integer postId);
-PostResponse getAllPost(Integer pageNumber, Integer pageSize);
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
     List<PostDto> getPostsByCategory(Integer categoryId);
 
     List<PostDto> getPostByUser(Integer userId);
 
-//  List<PostDto> searchPost(String keyword);
+    List<PostDto> searchPost(String keyword);
 
 }

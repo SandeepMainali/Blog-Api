@@ -14,6 +14,7 @@ import java.util.Date;
 public class PostDto {
 
 
+    private Integer PostId;
     private String tittle;
     private String content;
     private String imageName;
