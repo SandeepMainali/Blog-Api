@@ -101,26 +101,19 @@ public class PostController {
 
     }
 
-    @PostMapping("/post/image/upload/{postId}")
+    @PostMapping("post/image/upload/{postId}")
     public ResponseEntity<PostDto> uploadPostImage(@RequestParam("image") MultipartFile File,
                                                    @PathVariable Integer postId) throws IOException {
         PostDto postDto = this.postService.getPostById(postId);
-
-        String filename = this.fileService.uploadImage(path, File);
+        String filename = this.fileService.uploadImage(path,File);
         postDto.setImageName(filename);
-
         PostDto updatePost = this.postService.updatePost(postDto, postId);
-
         return new ResponseEntity<>(updatePost, HttpStatus.OK);
     }
-
-
     @GetMapping(value = "post/image/{imageName}",produces = MediaType.IMAGE_JPEG_VALUE)
-    public void  downloadImage(@PathVariable("imageName")String imageName, HttpServletResponse response)throws IOException{
+    public void  ViewImage(@PathVariable("imageName")String imageName, HttpServletResponse response)throws IOException{
         InputStream resource = this.fileService.getResource(path,imageName);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource,response.getOutputStream());
     }
-
-
 }
