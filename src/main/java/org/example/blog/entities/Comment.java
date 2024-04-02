@@ -13,9 +13,9 @@ import lombok.Setter;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer CommentId;
-    private String Comment;
-    private int userId;
-    private int postId;
+    private Integer Id;
+    private String content;
+    @ManyToOne
+    private Post post;
 
 }

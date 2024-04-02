@@ -32,10 +32,7 @@ public class GlobalExceptionHandler {
             String message= error.getDefaultMessage();
             resp.put(fieldName,message);
         });
-
-
-
-        return new ResponseEntity<Map<String,String>>(resp,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Map<String,String>>(resp,HttpStatus.BAD_REQUEST);
 
     }
 
